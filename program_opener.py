@@ -107,7 +107,7 @@ op_sys = platform.system().lower()  # Current operating system in lower case
 
 # from data import images
 config = ConfigParser()
-popenericon = os.path.dirname(__file__) + '\popener.ico'
+popenericon = os.path.dirname(__file__) + '\\popener.ico'
 # popenericon = images
 
 if os.path.isfile(popenericon):
