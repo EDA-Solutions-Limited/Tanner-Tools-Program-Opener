@@ -1,9 +1,8 @@
-
 #!/usr/bin/env python
 __author__ = "Airam Perez Guillen"
 __copyright__ = "Copyright 2020, Airam Perez Guillen, EDA Solutions LTD"
 #       Purpose: GUI program opener
-version_code = __version__ = "WIP1.0.6"
+version_code = __version__ = "1.0.5"
 
 # When creating exe or bin, use: "pyinstaller --onefile --icon=<icon> <path to pyw>"
 """################################################################################################ NOTES START 
@@ -24,7 +23,7 @@ version_code = __version__ = "WIP1.0.6"
             Linux program opening fixed
     (11-12)/02/2020 BETA 0.1.5:
             Added counter function (not in use)
-            Fixed remove old docking bug
+            Fixed remove old doking bug
             Fixed .wine-tanner folder.
             Fixed program opening screen bug - linux twice same version. -> changed location of vers = ["nothing"]
     13/02/2020 BETA 0.2:
@@ -54,24 +53,11 @@ version_code = __version__ = "WIP1.0.6"
                 >Whenever we have too many versions of the tools, we need to change page or scroll up and down.
                 Added columns "col" and "top". top contains the "Back" button and the question, and col contains the buttons.
             Added support for up to 50 versions of the same tool (up from 18)
-    13/07/2020 Release 1.0.6:
-                DR 005 Open again button is broken
-
-    xx/xx/2020 Release 1.0.7:
+    xx/xx/2020 Release 1.0.6:
             EH 002 Add Support for many different versions of the tools.
                 >Whenever we have too many versions of the tools, we need to change page or scroll up and down.
             EH 004 Add system independent tool support.
                 >Make the program compatible with different os architectures (i.e. Mentorgraphics in C: o D: or with a "Tanner" folder, etc.)
-            DR 002 When clicking back on main menu, the scroll bar appears.
-            DR 003 When pressing back after choosing a version, we should be able to choose a different version again, but instead it does nothing.
-            DR 004 Versions with two digits (i.e. 2016u11) are placed before single digit versions.
-            EH 006 Gather usage stats. 
-                >Would create a folder un %appdata% and write how mny times the program is used every day.
-            DR 005 Open again button is broken
-            EH 007 Capitalise the options.
-                >Options are in lower case.
-            EH 008 Add a "are you sure?" question on new/delete old docking, with "Yeas" and "Back" options.
-                >Currently if you click by mistake it just performs the action.
             Documentation link:
                 https://realpython.com/documenting-python-code/
 
@@ -82,7 +68,7 @@ version_code = __version__ = "WIP1.0.6"
  1. To modify the name of the database with the paths to the docking and instal location, change them in the top of "Program opener code" section.
 
 """  # ############################################################################################### INSTRUCTIONS END
-# ################################################################################################## Program GUI START.
+################################################################################################### Program GUI START.
 
 import PySimpleGUI as sg  # used to create the gui
 import sys  # used to handle errors.
@@ -106,16 +92,22 @@ from configparser import ConfigParser
 op_sys = platform.system().lower()  # Current operating system in lower case
 
 # from data import images
+
+popenericon = os.path.dirname(__file__) + '\popener.ico'
 config = ConfigParser()
-popenericon = os.path.dirname(__file__) + '\\popener.ico'
 # popenericon = images
 
 if os.path.isfile(popenericon):
     pass
 else:
     pass
-    #sg.Print('Cannot Find ICO File')
 
+
+def count_elements(list_provided):
+    item_number = 0
+    for item in list_provided:
+        item_number = item_number + 1
+    return item_number    # always will provide real number + 1 because of "nothing"
 
 
 def ensure_51_spaces(
@@ -127,7 +119,7 @@ def ensure_51_spaces(
 
 
 # #-----WINDOW AND LAYOUT---------------------------------##
-sg.change_look_and_feel('Dark Blue 3')  # Change the look and feel of the window
+sg.change_look_and_feel('Light Blue 3')  # Change the look and feel of the window
 
 
 def generate_layout(text, listofstuff):
@@ -142,7 +134,6 @@ def generate_layout(text, listofstuff):
     else:
         print("This is actually a problem and it will not be displayed correctly. :~/")
 
-    #listofstuff = ensure_51_spaces(listofstuff, item_count)  # Fix the "list of stuff" so that there are "" appended.
 
     def generate_button(
             stuffinlist):  # Adds the text to be displayed on the button (Which is also the value of the button), and gives it properties (size, visibility..)
@@ -156,22 +147,19 @@ def generate_layout(text, listofstuff):
 
         if (stuffinlist != ""):  # If not an empty character, we read it.
             if (len(stuffinlist) > 25):  # If string is too long, we make the box double
-
                 return sg.Button(stuffinlist, **button_visib_over)
             else:
                 return sg.Button(stuffinlist, **button_visib)
-        else:  # If it is an empty character, we turn the visibility off
+        else:                                                       # If it is an empty character, we turn the visibility off
             return sg.Button(stuffinlist, **button_invis)
 
-            # Properties of the buttons
-    
 
     # This is the column with the choices
 
     col = []
     for i in range (1,len(listofstuff),2):
         if i+1 <= len(listofstuff)-1:
-            col +=[[generate_button(listofstuff[i]),generate_button(listofstuff[i+1])]]
+            col +=[[generate_button(listofstuff[i]),generate_button(listofstuff[i+1])]] 
         else:
             col +=[[generate_button(listofstuff[i]),generate_button("")]]
 
@@ -190,7 +178,6 @@ def generate_layout(text, listofstuff):
     ]
     return layout
 
-
 # -----MAIN EVENT LOOP------------------------------------##
 def get_size_layout():
     if op_sys == "windows":
@@ -205,9 +192,6 @@ def get_size_layout():
 def get_gui_position():
     layoutWidth, layoutHeight = get_size_layout()
     screenWidth, screenHeight = pyautogui.size()
-    print(pyautogui.size())
-    # if screenHeight == 1080:
-    #     return (765, 325)
 
     progWidth = (screenWidth - layoutWidth) / 2
     progHeight = (screenHeight - layoutHeight) / 2
@@ -243,31 +227,32 @@ def new_window(text, varRead):  # Start or refresh the window(Text for the windo
 ################################################################################################### Program setup code end.
 ################################################################################################### Program code start.
 
-def write_config(path):
+def write_config(path): #write the found path to a config file
     config.read('config.ini')
     config.add_section('Mentor Path')
     config.set('Mentor Path', 'path', path)
     with open('config.ini', 'w') as f:
         config.write(f)
 
-def scan_drive():
+def scan_drive():       #scan all attached drives for mentor folder and write it to a config file 
 
     if os.path.exists('config.ini'):
         config.read('config.ini')
         return config.get('Mentor Path','path')
 
-    available_drives = ['%s:\\' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]
+    available_drives = ['%s:\\' % d for d in string.ascii_uppercase if os.path.exists('%s:' % d)]  #create list of available drives using comprehension
     toplev = 'Programs'
     Secondlev = 'MentorGraphics'
     for drive in available_drives:
-        for root, subdirs, files in os.walk(drive,topdown = True):
-            if toplev in subdirs:
-                subdirs[:] = [toplev]
+        for root, subdirs, files in os.walk(drive,topdown = True): # recursive walk of directories and subdirectories in a drive
+            if toplev in subdirs: 
+                subdirs[:] = [toplev]       #edit the subdirectories list in place to save time
             elif ((root.find(toplev) != -1) and (Secondlev in subdirs)):
                 subdirs[:] = [Secondlev]
-            elif (root == (drive + toplev + "\\" + Secondlev) ):
+            elif (root == (drive + toplev + "\\" + Secondlev) ): # if correct hierachy is found
                 write_config(root)
                 return root
+                pass
             else:
                 break      
             
@@ -278,7 +263,7 @@ def get_directory(toplev, Secondlev):
     diag = Tk()
     diag.withdraw()
 
-    root = filedialog.askdirectory(title = "Choose directory where tanner versions folders are located")
+    root = filedialog.askdirectory(title = "Choose directory where tanner versions folders are located") # gui to ask for location of the mentor folder
     if root == "":
         sys.exit()
     while ((root.find(toplev) == -1) or (root.find(Secondlev) == -1)):
@@ -291,21 +276,11 @@ def get_directory(toplev, Secondlev):
         return (get_directory(toplev,Secondlev))
 
 
-
-#These are the paths there the available versions will be fetched from.
+# ###These are the paths there the available versions will be fetched from.
 windows_MentorGraphics = scan_drive()
 linux_VersPath = "/modules/tanner"
 
 yes_no = ["nothing", "yes", "no"]  # List for yes/no
-
-
-def find_mentorgraphics():
-    if op_sys == "windows":
-        print(os.environ["ProgramFiles(x86)"])
-        print(os.environ["ProgramFiles"])
-    elif op_sys == "linux":
-        os.chdir(linux_VersPath)
-
 
 def find_tanner():  # This function finds the available versions of the tools installed in the machine.
     vers = ["nothing"]  # Initialised list for tool versions
@@ -319,16 +294,6 @@ def find_tanner():  # This function finds the available versions of the tools in
             vers.append(f)
     return sorted(vers, reverse=True)
     # End find_tanner()
-
-
-def count_dots(string):  # This function counts the dots in the provided string
-    d = {}
-    for c in string:
-        if c == "." in d:
-            d[c] += 1
-        else:
-            d[c] = 1
-    return d["."]
 
 
 # ###These are the paths where the docking will be fetched from.
@@ -415,29 +380,6 @@ def renameOldDockingOld(
                 print("DEBUG: " + current_popped + " changing to " + new_f)
 
 
-# ############################ DEBUG
-# if count_dots(current_popped) == 2:
-#     new_f = current_popped.replace('.old', '')
-#     os.rename(current_popped, new_f)
-
-
-# for f in os.listdir():
-#     if fnmatch.fnmatch(f, '*DockingLayout*.xml.old'):
-#         if count_dots(f) == 2:
-#             new_f = f.replace('.old', '')
-#             os.rename(f, new_f)
-# for f in os.listdir():
-#     if fnmatch.fnmatch(f, '*DockingLayout*.xml.old'):
-#         new_f = f.replace('.old', '')
-#         os.rename(f, new_f)
-# for f in os.listdir():
-#     if fnmatch.fnmatch(f, '*DockingLayout*.xml.old.old'):
-#         new_f = f.replace('.old', '')
-#         os.rename(f, new_f)
-#############################
-# printATime("\nRenamed old docking files... deleted temp...\n")
-# End renameOldDockingOld()
-
 optionsOpen = ["nothing", "open program", "new docking", "delete old docking", "exit"]  # Options of main menu
 optionOpenChosen = "nothing"  # initialised the last chosen option to open variable
 
@@ -488,8 +430,34 @@ def open_program():  # This function find the path of the tanner tools, chooses 
     version_path = findVersion_path()
 
     return chosen_version, chosen_prog, version_path, optionsOpen, lastprogramchosen
-    # END open_program()
 
+
+def open(open_program_return):
+    if open_program_return == "Back":  # If back was pressed, the return wouold be "Back", and then we would pass.
+        pass    
+    elif open_program_return != "Back":  # If back was not pressed, we carry on as usual
+        chosen_version, chosen_prog, version_path, optionsOpen, lastprogramchosen = open_program_return
+
+        programsDictWindows = {"nothing": "nothing", "L-Edit": "ledit64.exe", "S-Edit": "sedit64.exe",
+                              "T-Spice": "tspice64.exe", "WaveformViewer": "WaveformViewer64.exe",
+                               "TannerDesigner": "tdesigner64.exe", "LibManager": "libmgr64.exe"}
+        programsDictLinux = {"nothing": "nothing", "L-Edit": "ledit", "S-Edit": "sedit", "T-Spice": "tspice",
+                            "WaveformViewer": "WaveformViewer", "TannerDesigner": "tdesigner", "LibManager": "libmgr"}
+
+        if op_sys == "windows":
+            subprocess.Popen([version_path + "\\" + programsDictWindows[chosen_prog], '-new-tab'])
+
+        elif op_sys == "linux":  # #Choose the different OS ways of opening the programs. If not coded, ERROR 003
+                    # Since this machine is using modules, this has been addressed.
+            os.system("module unload tanner; module load tanner/" + chosen_version + "; " + programsDictLinux[
+                       chosen_prog] + "&")
+
+        else:  # #Exception of "op_sys == "
+            print("ERROR 0003 \t This OS is not supported: " + op_sys + "\n")
+            sys.exit()
+        return optionsOpen,lastprogramchosen
+
+    # END open_program()
 
 while optionOpenChosen != "exit":         # menu
 
@@ -503,29 +471,10 @@ while optionOpenChosen != "exit":         # menu
         if optionOpenChosen == "open program":
             open_program_return = open_program()
 
-            if open_program_return == "Back":  # If back was pressed, the return wouold be "Back", and then we would pass.
-                pass
-            elif open_program_return != "Back":  # If back was not pressed, we carry on as usual
-                chosen_version, chosen_prog, version_path, optionsOpen, lastprogramchosen = open_program_return
+            optionsOpen,lastprogramchosen = open(open_program_return)
 
-                programsDictWindows = {"nothing": "nothing", "L-Edit": "ledit64.exe", "S-Edit": "sedit64.exe",
-                                       "T-Spice": "tspice64.exe", "WaveformViewer": "WaveformViewer64.exe",
-                                       "TannerDesigner": "tdesigner64.exe", "LibManager": "libmgr64.exe"}
-                programsDictLinux = {"nothing": "nothing", "L-Edit": "ledit", "S-Edit": "sedit", "T-Spice": "tspice",
-                                     "WaveformViewer": "WaveformViewer", "TannerDesigner": "tdesigner", "LibManager": "libmgr"}
-
-                if op_sys == "windows":
-                    subprocess.Popen([version_path + "\\" + programsDictWindows[chosen_prog], '-new-tab'])
-
-                elif op_sys == "linux":  # #Choose the different OS ways of opening the programs. If not coded, ERROR 003
-                    # Since this machine is using modules, this has been addressed.
-                    os.system("module unload tanner; module load tanner/" + chosen_version + "; " + programsDictLinux[
-                            chosen_prog] + "&")
-
-                else:  # #Exception of "op_sys == "
-                    print("ERROR 0003 \t This OS is not supported: " + op_sys + "\n")
-                    sys.exit()
-
+        elif optionOpenChosen == lastprogramchosen:
+           optionsOpen,lastprogramchosen = open(open_program_return)
 
     elif optionOpenChosen == "new docking":
         docking_path = getDockingPath()
