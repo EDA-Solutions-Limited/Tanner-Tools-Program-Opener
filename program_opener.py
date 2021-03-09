@@ -103,29 +103,11 @@ else:
     pass
 
 
-def count_elements(list_provided):
-    item_number = 0
-    for item in list_provided:
-        item_number = item_number + 1
-    return item_number    # always will provide real number + 1 because of "nothing"
-
-
-def ensure_51_spaces(
-        list_provided, item_number):  # This function appends empty characters ("") so that the number of elements in the list is at least 30.
-    if item_number < 51:  # 19 in order to account for "nothing"
-        for x in range(51 - item_number):
-            list_provided.append("")
-    return list_provided
-
-
 # #-----WINDOW AND LAYOUT---------------------------------##
+
 sg.change_look_and_feel('Light Blue 3')  # Change the look and feel of the window
 
-
 def generate_layout(text, listofstuff):
-
-    # listofstuff = [str(i) for i in range(51)]
-    # ["nothing", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", ""]
  
     if len(listofstuff) <= 19:  # If everything fits in one screen, hide the scroll bars
         scrollable_flag = False
@@ -252,7 +234,6 @@ def scan_drive():       #scan all attached drives for mentor folder and write it
             elif (root == (drive + toplev + "\\" + Secondlev) ): # if correct hierachy is found
                 write_config(root)
                 return root
-                pass
             else:
                 break      
             
