@@ -1,16 +1,19 @@
-from file_manager import FileManager
 import os
-from pythonds.basic import Stack
 from fnmatch import fnmatch
 from sys import exit
+
+from pythonds.basic import Stack
+
+from file_manager import FileManager
+
+
 class Docking():
-    def __init__(self,file_manager:FileManager):
+    def __init__(self, file_manager: FileManager):
         self.file_manager = file_manager
 
-# ###These are the paths where the docking will be fetched from.
+    # ###These are the paths where the docking will be fetched from.
 
-
-    def getDockingPath(self,op_sys):
+    def getDockingPath(self, op_sys):
         if op_sys == "windows":
             appdata_path = os.getenv('APPDATA')
             docking_path = appdata_path + "\\Tanner EDA"
@@ -20,7 +23,7 @@ class Docking():
             versions.pop(0)
             docking_path = [
                 ("/home/" + user + "/.wine-tanner" + "_" + n +
-                "/drive_c/users/" + user + "/Application Data/Tanner_EDA")
+                 "/drive_c/users/" + user + "/Application Data/Tanner_EDA")
                 for n in versions]
             print(docking_path)
         else:
@@ -30,8 +33,8 @@ class Docking():
         return (docking_path)
         # end getDockingPath()
 
-
-    def renameOldDocking(self,docking_path):  # new docking         #This method renames the dockinglayout files by appending ".old" to the end of them.
+    def renameOldDocking(self,
+                         docking_path):  # new docking         #This method renames the dockinglayout files by appending ".old" to the end of them.
 
         os.chdir(
             docking_path)  # Change the current working directory to the directory of the docking layout. This doesnt affect STATUS BAR!!!
@@ -45,13 +48,13 @@ class Docking():
                 except FileExistsError:
                     new_f = new_f + ".old"
                     print("DEBUG: FileExistsError: " +
-                        new_f + " changing to " + new_f)
+                          new_f + " changing to " + new_f)
                     os.rename(f, new_f)
         # printATime("\nRenamed docking files. Created temp.\n")
         # End renameOldDocking()
 
-
-    def renameOldDockingOld(self,docking_path):  # r emove old docking  #This method renames the dockinglayout, restoring it bu removing the ".old" at the end of them, if there is any.
+    def renameOldDockingOld(self,
+                            docking_path):  # r emove old docking  #This method renames the dockinglayout, restoring it bu removing the ".old" at the end of them, if there is any.
         os.chdir(
             docking_path)  # Change the current working directory to the directory of the docking layout. This doesnt affect STATUS BAR!!!
         # This flag is to check if there is any ".old" file so that files do not get unnecessaryli deleted.
@@ -70,7 +73,7 @@ class Docking():
         if oldFlag:  # Only if there is a modification by this program, delete old dockings
             for f in os.listdir():
                 if fnmatch(f,
-                                '*DockingLayout*.xml'):  # First, delete the files which do not have a ".old" in them (these are the newly created ones.)
+                           '*DockingLayout*.xml'):  # First, delete the files which do not have a ".old" in them (these are the newly created ones.)
                     print("DEBUG: Deleting " + f)
                     os.remove(f)
 
@@ -93,7 +96,8 @@ class Docking():
                         "FileExistsError: Deleting " + new_f + " because " + current_popped + " would be called the same.")
                     os.rename(current_popped, new_f)
                     print("DEBUG: " + current_popped + " changing to " + new_f)
-    def new_docking(self,op_sys):
+
+    def new_docking(self, op_sys):
         docking_path = self.getDockingPath(op_sys)
 
         if (isinstance(docking_path, str)):
@@ -102,9 +106,8 @@ class Docking():
             for item in docking_path:
                 print("DEBUG: path: " + item)
                 self.renameOldDocking(item)
-    
 
-    def delete_old_docking(self,op_sys):
+    def delete_old_docking(self, op_sys):
         docking_path = self.getDockingPath(op_sys)
         if (isinstance(docking_path, str)):
             self.renameOldDockingOld(docking_path)

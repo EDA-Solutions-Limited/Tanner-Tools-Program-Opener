@@ -1,12 +1,16 @@
-from file_manager import FileManager
-from window_manager import WindowManager
 import os
 import platform  # Used to get the current operating system
-from sys import exit
-from layout import Layout
 import subprocess  # used to open programs in windows.
+from sys import exit
+
+from file_manager import FileManager
+from layout import Layout
+from window_manager import WindowManager
+
 file_manager = FileManager()
 op_sys = platform.system().lower()  # Current operating system in lower case
+
+
 def choose_program():
     prog = ["nothing", "L-Edit", "S-Edit", "T-Spice", "WaveformViewer", "TannerDesigner",
             "LibManager"]  # Initialised list for programs
@@ -30,8 +34,8 @@ def choose_version():
         return choose_program()
 
 
-def open(chosen_prog, chosen_version):
-    version_path = file_manager.findVersion_path(chosen_version, op_sys)
+def open_program(chosen_prog, chosen_version):
+    version_path = file_manager.find_version_path(chosen_version, op_sys)
 
     programsDictWindows = {"nothing": "nothing", "L-Edit": "ledit64.exe", "S-Edit": "sedit64.exe",
                            "T-Spice": "tspice64.exe", "WaveformViewer": "WaveformViewer64.exe",
