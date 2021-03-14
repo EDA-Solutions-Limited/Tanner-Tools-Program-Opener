@@ -10,7 +10,6 @@ from window_manager import WindowManager
 __author__ = "Airam Perez Guillen & James Mutumba"
 __copyright__ = "Copyright 2021, James Mutumba, EDA Solutions LTD"
 
-version_code = __version__ = "1.0.7"
 
 # ###These are the paths there the available versions will be fetched from.
 op_sys = platform.system().lower()  # Current operating system in lower case

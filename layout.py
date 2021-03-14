@@ -1,9 +1,9 @@
 import PySimpleGUI as sg
 
-version_code = __version__ = "1.0.5"
+version_code = __version__ = "1.0.7"
 
 
-def generate_button(stuffinlist):  # Adds the text to be displayed on the button (Which is also the value of the button), and gives it properties (size, visibility..)
+def generate_button(stuffinlist):  # Adds the text to be displayed on the button
     # #-----DEFAULT SETTINGS--------------------------##
     button_visib: dict = {'size': (19, 1), 'font': ('Franklin Gothic Book', 12),
                           'button_color': ("black", "#F8F8F8"), 'visible': True}  # Visible button
