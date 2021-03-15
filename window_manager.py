@@ -36,6 +36,7 @@ def get_gui_position():
 
 prevWinLoc = get_gui_position()
 
+
 class WindowManager:
     def __init__(self, layout: Layout):
         self.window_manager = layout

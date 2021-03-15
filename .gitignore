@@ -1,0 +1,5 @@
+/.vs/
+/build/
+/dist/
+/venv/
+/config.ini
