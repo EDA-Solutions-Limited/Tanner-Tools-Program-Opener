@@ -9,6 +9,7 @@ from window_manager import WindowManager
 
 file_manager = FileManager()
 op_sys = platform.system().lower()  # Current operating system in lower case
+global prevWinLoc
 
 
 def choose_program():

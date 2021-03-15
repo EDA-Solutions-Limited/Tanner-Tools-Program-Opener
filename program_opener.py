@@ -5,7 +5,7 @@ from dockings import Docking
 from file_manager import FileManager
 from layout import Layout
 from program_manager import choose_program, choose_version, open_program
-from window_manager import WindowManager
+from window_manager import WindowManager, get_gui_position
 
 __author__ = "Airam Perez Guillen & James Mutumba"
 __copyright__ = "Copyright 2021, James Mutumba, EDA Solutions LTD"
@@ -14,7 +14,7 @@ __copyright__ = "Copyright 2021, James Mutumba, EDA Solutions LTD"
 # ###These are the paths there the available versions will be fetched from.
 op_sys = platform.system().lower()  # Current operating system in lower case
 dockings = Docking(FileManager())
-
+prevWinLoc = get_gui_position()
 yes_no = ["nothing", "yes", "no"]  # List for yes/no
 
 optionsOpen = ["nothing", "open program", "new docking", "delete old docking", "exit"]  # Options of main menu

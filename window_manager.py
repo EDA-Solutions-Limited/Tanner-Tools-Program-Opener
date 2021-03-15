@@ -34,17 +34,19 @@ def get_gui_position():
     return progWidth, progHeight
 
 
+prevWinLoc = get_gui_position()
+
 class WindowManager:
     def __init__(self, layout: Layout):
         self.window_manager = layout
-        self.prevWinLoc = get_gui_position()
 
     def new_window(self):
+        global prevWinLoc
         sizelayout = get_size_layout()
         window: object = sg.Window('Program Opener ' + version_code, margins=(3, 2),
                                    layout=self.window_manager.generate_layout(),
                                    background_color="#272533", size=sizelayout, return_keyboard_events=False,
-                                   location=self.prevWinLoc, icon=popenericon)
+                                   location=prevWinLoc, icon=popenericon)
 
         event, values = window.read()
 
@@ -52,6 +54,6 @@ class WindowManager:
             window.close()
             sys.exit()
         else:
-            self.prevWinLoc = window.CurrentLocation()
+            prevWinLoc = window.CurrentLocation()
             window.close()
             return event

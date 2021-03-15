@@ -4,7 +4,7 @@ from fnmatch import fnmatch
 from os import walk, chdir, listdir
 from os.path import exists
 from sys import exit
-from tkinter import *
+from tkinter import Tk
 from tkinter import filedialog
 
 config = ConfigParser()
@@ -19,10 +19,8 @@ def write_config(path):  # write the found path to a config file
 
 
 class FileManager:
-
     def __init__(self):
-        #self.windows_MentorGraphics = self.scan_drive()
-        self.windows_MentorGraphics = "C:\\MentorGraphics\\Tanner"
+        self.windows_MentorGraphics = self.scan_drive()
         self.linux_VersPath = "/modules/tanner"
 
     def scan_drive(self):  # scan all attached drives for mentor folder and write it to a config file
