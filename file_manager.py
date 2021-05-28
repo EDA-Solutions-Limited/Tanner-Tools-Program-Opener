@@ -1,14 +1,16 @@
-import string
+import glob
+import json
 from configparser import ConfigParser
-from fnmatch import fnmatch
-from os import walk, chdir, listdir
-from os.path import exists
+from os import walk,sep
+from os.path import exists,split
 from sys import exit
 from tkinter import Tk
 from tkinter import filedialog
+from collections import defaultdict
+from win32com.client import Dispatch
+from win32api import GetFileVersionInfo
 
 config = ConfigParser()
-
 
 def write_config(path):  # write the found path to a config file
     config.read('config.ini')
@@ -29,27 +31,9 @@ class FileManager:
             config.read('config.ini')
             return config.get('Mentor Path', 'path')
 
-        available_drives = ['%s:\\' % d for d in string.ascii_uppercase if exists(
-            '%s:' % d)]  # create list of available drives using comprehension
-        toplev = 'Programs'
-        Secondlev = 'MentorGraphics'
-        for drive in available_drives:
-            # recursive walk of directories and subdirectories in a drive
-            for root, subdirs, files in walk(drive, topdown=True):
-                if toplev in subdirs:
-                    # edit the subdirectories list in place to save time
-                    subdirs[:] = [toplev]
-                elif (root.find(toplev) != -1) and (Secondlev in subdirs):
-                    subdirs[:] = [Secondlev]
-                elif root == (drive + toplev + "\\" + Secondlev):  # if correct hierarchy is found
-                    write_config(root)
-                    return root
-                else:
-                    break
+        return self.get_directory()
 
-        return self.get_directory(toplev, Secondlev)
-
-    def get_directory(self, toplev, secondlev):
+    def get_directory(self):
         diag = Tk()
         diag.withdraw()
 
@@ -58,38 +42,45 @@ class FileManager:
             title="Choose directory where tanner versions folders are located")
         if root == "":
             exit()
-        while (root.find(toplev) == -1) or (root.find(secondlev) == -1):
-            root = filedialog.askdirectory(
-                title="Choose directory where tanner versions folders are located")
-            if root == "":
-                exit()
-
-        if root.endswith(secondlev):
+        test_dict = self.find_tanner(root)
+        if test_dict:
+            self.write_json(test_dict)
             write_config(root)
             return root
         else:
-            return self.get_directory(toplev, secondlev)
+            return self.get_directory()
 
-    # This function finds the available versions of the tools installed in the machine.
-    def find_tanner(self, op_sys):
-        vers = ["nothing"]  # Initialised list for tool versions
-        if op_sys == "windows":
-            chdir(self.windows_MentorGraphics)
+    def find_tanner(self,root):
 
-        elif op_sys == "linux":
-            chdir(self.linux_VersPath)
-        for f in listdir():
-            if fnmatch(f, "20*"):
-                vers.append(f)
-        return sorted(vers, reverse=True)
+        text_files = glob.glob(
+            root + "/**/Tanner EDA/Tanner Tools*/x64/sedit64.exe", recursive=True)
+        test_dict = defaultdict(dict)
 
-    def find_version_path(self, chosen_version, op_sys):  # Get path of installation
-        if op_sys == "windows":
-            chdir(self.windows_MentorGraphics + "\\" +
-                  chosen_version + "\\Tanner EDA")
-            # There is only one folder here so it just returns one.
-            for TannerToolsV in listdir():
-                return (
-                        self.windows_MentorGraphics + "\\" + chosen_version + "\\Tanner EDA\\" + TannerToolsV + "\\x64")
-        elif op_sys == "linux":
-            return self.linux_VersPath + "/" + chosen_version
+        for f in text_files:
+            langs = GetFileVersionInfo(text_files[0], r'\VarFileInfo\Translation')
+            name_key = r'StringFileInfo\%04x%04x\ProductName' % (
+                langs[0][0], langs[0][1])
+            version_key = r'StringFileInfo\%04x%04x\ProductVersion' % (
+                langs[0][0], langs[0][1])
+            product_name = GetFileVersionInfo(f, name_key)
+            major_version = GetFileVersionInfo(f, version_key)
+            build = Dispatch('Scripting.FileSystemObject').GetFIleVersion(f)
+
+            if 'Update' not in product_name:
+                test_dict['Betas'][build] = {'Installation path': split(f)[
+                    0], 'Name': product_name}
+            else:
+                test_dict[major_version.split('.')[0]][major_version] = {'Installation path': split(f)[
+                    0], 'Name': product_name}
+
+        return test_dict
+
+    def write_json(self,test_dict):
+        json_object = json.dumps(test_dict, indent=4)
+        with open('data.json', 'w') as outfile:
+            outfile.write(json_object)
+
+    def load_json(self):
+        with open('data.json', 'r') as openfile:
+            json_object = json.load(openfile)
+        return json_object

@@ -3,3 +3,11 @@
 /dist/
 /venv/
 /config.ini
+program_opener.spec
+__pycache__/dockings.cpython-37.pyc
+__pycache__/file_manager.cpython-37.pyc
+__pycache__/layout.cpython-37.pyc
+__pycache__/program_manager.cpython-37.pyc
+__pycache__/program_opener.cpython-37.pyc
+__pycache__/window_manager.cpython-37.pyc
+config.ini
