@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-version_code = __version__ = "1.0.7"
+version_code = __version__ = "2.0"
 
 
 def generate_button(stuffinlist):  # Adds the text to be displayed on the button

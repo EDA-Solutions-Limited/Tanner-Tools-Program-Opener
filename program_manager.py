@@ -2,9 +2,8 @@ import os
 import platform  # Used to get the current operating system
 import subprocess  # used to open programs in windows.
 from sys import exit
-from tkinter.filedialog import test
 from os.path import isfile
-from file_manager import FileManager
+from file_manager import FileManager, write_json, find_tanner, load_json
 from layout import Layout
 from window_manager import WindowManager
 
@@ -13,40 +12,48 @@ op_sys = platform.system().lower()  # Current operating system in lower case
 global prevWinLoc
 
 if not isfile("data.json"):
-    file_manager.write_json(file_manager.find_tanner(file_manager.windows_MentorGraphics))
-test_dict = file_manager.load_json()
+    write_json(find_tanner(file_manager.windows_MentorGraphics))
+test_dict = load_json()
+
+def update_versions():
+    global test_dict
+    write_json(find_tanner(file_manager.windows_MentorGraphics))
+    test_dict = load_json()
+
 
 def choose_program():
     prog = ["nothing", "L-Edit", "S-Edit", "T-Spice", "WaveformViewer", "TannerDesigner",
             "LibManager"]  # Initialised list for programs
-    progWindow = WindowManager(
+    prog_window = WindowManager(
         Layout("What program would you like to open?", prog))
-    chosen_prog = progWindow.new_window()
+    chosen_prog = prog_window.new_window()
 
     if chosen_prog != "Back":
         return choose_year(chosen_prog)
     else:
-        return "Back", "Back","Back"
+        return "Back", "Back", "Back"
+
 
 def choose_year(chosen_prog):
-    years = sorted([item for item in test_dict.keys()],reverse=True)
-    years.insert(0,"nothing")
-    yearWindow = WindowManager(
+    years = sorted([item for item in test_dict.keys()], reverse=True)
+    years.insert(0, "nothing")
+    year_window = WindowManager(
         Layout("What year would you like to open?", years))
-    chosen_year = yearWindow.new_window()
+    chosen_year = year_window.new_window()
     if chosen_year != "Back":
         return choose_version(chosen_prog, chosen_year)
     else:
         return choose_program()
 
+
 def choose_version(chosen_prog, chosen_year):
     versions = sorted([item for item in test_dict[chosen_year].keys()], reverse=True)
     versions.insert(0, "nothing")
-    versWindow = WindowManager(
+    version_window = WindowManager(
         Layout("What version would you like to open? ", versions))
-    chosen_version = versWindow.new_window()
+    chosen_version = version_window.new_window()
     if chosen_version != "Back":
-        return chosen_prog, chosen_year,chosen_version
+        return chosen_prog, chosen_year, chosen_version
     else:
         return choose_year(chosen_prog)
 

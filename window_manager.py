@@ -7,11 +7,10 @@ import pyautogui
 
 from layout import Layout
 
-version_code = __version__ = "1.0.7"
+version_code = __version__ = "2.0"
 
 op_sys = platform.system().lower()  # Current operating system in lower case
-popenericon = os.path.dirname(__file__) + "\\" + "popener.ico"
-print(os.path.isfile(popenericon))
+popenericon = os.path.abspath("popener.ico")
 
 
 def get_size_layout():
