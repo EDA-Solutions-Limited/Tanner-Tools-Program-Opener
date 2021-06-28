@@ -47,7 +47,7 @@ To get started with using this code, ensure you have python 3 installed.
 
 ### Prerequisites
 The  [**requirements.txt**](https://github.com/jymes9/Program/blob/main/requirements.txt) file contains the required python libraries needed to run this program.
-you can install them via pip 
+you can install them via pip  
 For example
 
 * PySimpleGUI
