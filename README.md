@@ -54,15 +54,15 @@ The following python libraries are required.
   ```sh
   pip install PySimpleGUI
   ```
-  * PySimpleGUI
+* PySimpleGUI
   ```sh
   pip install PySimpleGUI
   ```
-  * PySimpleGUI
+* PySimpleGUI
   ```sh
   pip install PySimpleGUI
   ```
-  * PySimpleGUI
+* PySimpleGUI
   ```sh
   pip install PySimpleGUI
   ```
