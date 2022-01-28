@@ -1,12 +1,12 @@
-import glob
-import json
-from configparser import ConfigParser
+import glob # for traversing the directory structure to find sedit.exe instances
+import json # for storing the found tanner tools in a json file
+from configparser import ConfigParser # for reading and writing the config file for the main Mentor path
 from os.path import exists, split
 from sys import exit
-from tkinter import Tk
+from tkinter import Tk # for the Mentor path location dialog
 from tkinter import filedialog
 from collections import defaultdict
-from win32com.client import Dispatch
+from win32com.client import Dispatch # for getting the version number of the tanner tools
 from win32api import GetFileVersionInfo
 
 config = ConfigParser() # Create config parser object
@@ -27,11 +27,12 @@ def find_tanner(root):
     test_dict = defaultdict(dict)
 # for each sedit.exe file found, get the version number and the path, using windows File properties
     for f in text_files:
+# information about windows file version info at https://docs.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource
         langs = GetFileVersionInfo(text_files[0], r'\VarFileInfo\Translation')
         name_key = r'StringFileInfo\%04x%04x\ProductName' % (
-            langs[0][0], langs[0][1])
+            langs[0][0], langs[0][1]) # combination of the language code and the charset ID
         version_key = r'StringFileInfo\%04x%04x\ProductVersion' % (
-            langs[0][0], langs[0][1])
+            langs[0][0], langs[0][1]) 
         product_name = GetFileVersionInfo(f, name_key)
         major_version = GetFileVersionInfo(f, version_key)
         build = Dispatch('Scripting.FileSystemObject').GetFIleVersion(f)
@@ -86,4 +87,4 @@ class FileManager:
             write_config(root)
             return root
         else:
-            return self.get_directory()
+            return self.get_directory() # recurse until the correct directory is chosen

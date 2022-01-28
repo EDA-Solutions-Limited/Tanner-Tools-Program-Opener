@@ -29,15 +29,15 @@ if __name__ == "__main__":
         optionOpenChosen = open_window.new_window()
 
         if optionOpenChosen == "open program":
-            chosen_prog, chosen_year, chosen_version = choose_program()
-            if chosen_prog == "Back":
+            chosen_prog, chosen_year, chosen_version = choose_program() # chosen program, year and version
+            if chosen_prog == "Back": # if the user wants to go back to the main menu
                 continue
             lastprogramchosen = f"Again {chosen_prog} {chosen_version}"
             open_program(chosen_prog, chosen_year, chosen_version)
             optionsOpen = ["nothing", lastprogramchosen, "open program",
                         "new docking", "delete old docking", "Update Versions", "exit"]
 
-        elif optionOpenChosen == "Back":
+        elif optionOpenChosen == "Back": # if the user wants to go back to the main menu
             optionOpenChosen = open_window.new_window()
         elif optionOpenChosen == lastprogramchosen:
             open_program(chosen_prog, chosen_year, chosen_version)
