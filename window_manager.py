@@ -33,13 +33,13 @@ def get_gui_position():
     return progWidth, progHeight
 
 
-prevWinLoc = get_gui_position()
+prevWinLoc = get_gui_position() # Previous window location on screen
 
-
+# window manager class
 class WindowManager:
     def __init__(self, layout: Layout):
         self.window_manager = layout
-
+# function to create a new window, calls the layout class to build the window contents
     def new_window(self):
         global prevWinLoc
         sizelayout = get_size_layout()

@@ -30,12 +30,13 @@ class Layout:
 
         if len(self.listofstuff) <= 19:  # If everything fits in one screen, hide the scroll bars
             scrollable_flag = False
-        elif 19 < len(self.listofstuff) <= 51:  # item_count > 19 and item_count <= 37
+        elif 19 < len(self.listofstuff) <= 51:  # item_count > 19 and item_count <= 51
             scrollable_flag = True
         else:
             print("This is actually a problem and it will not be displayed correctly. :~/")
 
         col = []
+        # generate the buttons in the layout using PySimple GUI
         for i in range(1, len(self.listofstuff), 2):
             if i + 1 <= len(self.listofstuff) - 1:
                 col += [[generate_button(self.listofstuff[i]),

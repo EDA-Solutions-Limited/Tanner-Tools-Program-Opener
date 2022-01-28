@@ -21,7 +21,7 @@ optionOpenChosen = "nothing"  # initialised the last chosen option to open varia
 
 lastprogramchosen = "none"  # Initialised Last Chosen Program
 
-
+# ###This is the main menu of the program
 if __name__ == "__main__":
     while optionOpenChosen != "exit":  # menu
         open_window = WindowManager(
@@ -45,6 +45,6 @@ if __name__ == "__main__":
         elif optionOpenChosen == "new docking":
             dockings.new_docking(op_sys)
         elif optionOpenChosen == "Update Versions":
-            update_versions()
+            update_versions() # Update the versions of the programs during runtime
         elif optionOpenChosen == "delete old docking":
             dockings.delete_old_docking(op_sys)
