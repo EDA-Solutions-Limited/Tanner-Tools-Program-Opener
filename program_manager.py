@@ -38,10 +38,10 @@ def choose_year(chosen_prog):
     years = sorted([item for item in test_dict.keys()], reverse=True) # Sorted list of years, latest at top
     years.insert(0, "nothing") # Insert "nothing" as the first item in the list, Pysimple GUI requires this
     year_window = WindowManager(
-        Layout("What year would you like to open?", years))
+        Layout("What year would you like to open?", years)) # open a new window with Programs arranged in release Years.
     chosen_year = year_window.new_window() # returns what the user chose, a year or "Back"
     if chosen_year != "Back": # If the user didnt click on Back, and chooses a year, proceed to the next step (Versions)
-        return choose_version(chosen_prog, chosen_year)
+        return choose_version(chosen_prog, chosen_year) # return everything the user chose to this step
     else: # If the user clicked on Back, return to the previous step
         return choose_program()
 
@@ -69,7 +69,7 @@ def open_program(chosen_prog, chosen_year, chosen_version):
 
     if op_sys == "windows":
         subprocess.Popen(
-            [version_path + "\\" + programsDictWindows[chosen_prog], '-new-tab'])
+            [version_path + "\\" + programsDictWindows[chosen_prog], '-new-tab']) # open the program in another thread
 
     elif op_sys == "linux":  # #Choose the different OS ways of opening the programs. If not coded, ERROR 003
         # Since this machine is using modules, this has been addressed.

@@ -11,3 +11,6 @@ __pycache__/program_manager.cpython-37.pyc
 __pycache__/program_opener.cpython-37.pyc
 __pycache__/window_manager.cpython-37.pyc
 config.ini
+__pycache__/
+.idea/
+.vs/

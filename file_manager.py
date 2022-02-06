@@ -79,7 +79,7 @@ class FileManager:
         # gui to ask for location of the mentor folder
         root = filedialog.askdirectory(
             title="Choose directory where tanner versions folders are located")
-        if root == "":
+        if root == "": # if user chooses to exit the app, exit
             exit()
         test_dict = find_tanner(root)
         if test_dict:

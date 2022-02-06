@@ -39,15 +39,18 @@ class Layout:
         # generate the buttons in the layout using PySimple GUI
         for i in range(1, len(self.listofstuff), 2):
             if i + 1 <= len(self.listofstuff) - 1:
+                # generate buttons side by side and if at the end, add a blank button
                 col += [[generate_button(self.listofstuff[i]),
                          generate_button(self.listofstuff[i + 1])]]
             else:
                 col += [[generate_button(self.listofstuff[i]), generate_button("")]]
+        # Check if we are at the main home page, if not, add the back button
         if "open program" not in self.listofstuff:
             top = [[sg.Button("Back", size=(5, 1), font=('Franklin Gothic Book', 12), button_color=("black", "#84848a"),
                               visible=True),
                     sg.Text(self.text, size=(34, 1), justification='right', background_color="#272533",
                             text_color='white', font=('Franklin Gothic Book', 12))]]
+        # At the main home page, no back button
         else:
             top = [[sg.Text(self.text, size=(34, 1), justification='right', background_color="#272533",
                             text_color='white', font=('Franklin Gothic Book', 12))]]
@@ -55,7 +58,6 @@ class Layout:
         # This is the layout of the GUI
         layout: list = [
             [sg.Text('Program Opener ' + version_code, size=(50, 1), justification='right', background_color="#272533",
-                     # Layer 1:  Program opener <version>
                      text_color='white', font=('Franklin Gothic Book', 12, 'bold'))],
             [sg.Column(top, background_color="#272533")],
             [sg.Column(col, size=(390, 400), background_color="#272533",
