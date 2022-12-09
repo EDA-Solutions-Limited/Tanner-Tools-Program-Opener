@@ -160,6 +160,6 @@ Not to be distributed to anyone outside EDA solutions.
 <!-- CONTACT -->
 ## Contact
 
-James Mutumba - [@jymes9](https://twitter.com/jymes9) - jymes9@gmail.com
+Support - support@eda-solutions.com
 
 Project Link: [tools installer and downloader](https://github.com/jymes9/tools_downloader_and_installer.git)
