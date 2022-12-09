@@ -1,7 +1,5 @@
 #  Tanner tools program opener 
 
-![Program opener](popener.png "Image Title")
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -46,7 +44,7 @@ The project inspiration is based off the need for a tool that allows a user to o
 To get started with using this code, ensure you have python 3 installed. 
 
 ### Prerequisites
-The  [**requirements.txt**](https://github.com/jymes9/Program/blob/main/requirements.txt) file contains the required python libraries needed to run this program.
+The  [**requirements.txt**](https://github.com/jymes9/Tanner-Tools-Program-Opener/blob/main/requirements.txt) file contains the required python libraries needed to run this program.
 you can install them via pip  
 For example
 
@@ -61,7 +59,7 @@ For example
 1. Open the project at **..\James\Completed scripts\program_opener** with an editor. Preferrably [**vscode**](https://code.visualstudio.com/)
 2. You could also clone the repo
    ```sh
-   git clone https://github.com/jymes9/Program.git
+   git clone https://github.com/jymes9/Tanner-Tools-Program-Opener.git
 3. Compile the file into a `.exe` or `.bin` using **pyinstaller**     
         **`pyinstaller --onefile --icon=<icon> <path to pyw>`**
 
@@ -164,4 +162,4 @@ GNU Genral Publuic License v3.0
 
 Support - support@eda-solutions.com
 
-Project Link: [tools installer and downloader](https://github.com/jymes9/tools_downloader_and_installer.git)
+Project Link: [tools installer and downloader](https://github.com/EDA-Solutions-Limited/Tanner-Tools-Program-Opener.git)
