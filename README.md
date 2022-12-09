@@ -160,6 +160,6 @@ GNU Genral Publuic License v3.0
 <!-- CONTACT -->
 ## Contact
 
-Support - support@eda-solutions.com
+Support - github@eda-solutions.com
 
 Project Link: [tools installer and downloader](https://github.com/EDA-Solutions-Limited/Tanner-Tools-Program-Opener.git)
