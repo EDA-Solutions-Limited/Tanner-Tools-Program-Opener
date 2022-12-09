@@ -156,7 +156,7 @@ Done by using sorted() function in `find_tanner()`.
 <!-- LICENSE -->
 ## License
 
-Not to be distributed to anyone outside EDA solutions. 
+GNU Genral Publuic License v3.0
 
 <!-- CONTACT -->
 ## Contact
