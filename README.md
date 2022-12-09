@@ -151,7 +151,7 @@ Done by using sorted() function in `find_tanner()`.
   Documentation link:
                 https://realpython.com/documenting-python-code/
 ### xx/xx/2022 Release 2.0.0:
-- made the tool shown version number match github
+- Made the tool shown version number match github
 
 <!-- LICENSE -->
 ## License
