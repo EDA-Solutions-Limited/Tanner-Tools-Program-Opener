@@ -150,7 +150,8 @@ Done by using sorted() function in `find_tanner()`.
 - Make the program compatible with different os architectures (i.e. Mentorgraphics in C: o D: or with a "Tanner" folder, etc.)
   Documentation link:
                 https://realpython.com/documenting-python-code/
-
+### xx/xx/2022 Release 2.0.0:
+- made the tool shown version number match github
 
 <!-- LICENSE -->
 ## License
