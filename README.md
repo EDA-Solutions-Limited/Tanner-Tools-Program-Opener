@@ -155,7 +155,7 @@ Done by using sorted() function in `find_tanner()`.
 <!-- LICENSE -->
 ## License
 
-GNU Genral Publuic License v3.0
+MIT License
 
 <!-- CONTACT -->
 ## Contact
